@@ -1,29 +1,39 @@
 package com.shep.Entities;
 
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import jakarta.persistence.*;
+import java.util.List;
 
-import java.util.HashSet;
-import java.util.Set;
-
-@Getter
-@Setter
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<String> roles = new HashSet<>();
+    @Column(nullable = false)
+    private String role;
 
-    @ManyToOne
-    @JoinColumn(name = "user_secret_id")
-    private UserSecret userSecret;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Record> records;
 
-    // Getters and setters
+    public User(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User() {
+
+    }
 }

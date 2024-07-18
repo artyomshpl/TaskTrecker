@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JpaBuddyIdeaProjectConfig">
-    <option name="reLastEntityCreationPackage" value="src/main/java/com/shep" />
-    <option name="reverseEngineeringLastDbConnectionId" value="ba91ea38-69d3-43c3-967a-b1f44ac5fe1d__task_trecker_public" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/com/shep/Services" />
+    <option name="reverseEngineeringLastDbConnectionId" value="03b5695b-e464-497e-83b5-09b68675157e__task_trecker_test_public" />
   </component>
 </project>
