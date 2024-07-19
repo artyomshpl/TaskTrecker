@@ -3,40 +3,32 @@ package com.shep.Controllers;
 import com.shep.Entities.User;
 import com.shep.Services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.Instant;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtEncoder jwtEncoder;
+    private final JwtDecoder jwtDecoder;
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private TokenStore tokenStore;
-
-    @Autowired
-    private DefaultTokenServices tokenServices;
+    public AuthController(UserService userService, PasswordEncoder passwordEncoder, JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtEncoder = jwtEncoder;
+        this.jwtDecoder = jwtDecoder;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody User user) {
@@ -50,21 +42,26 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody User user) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+        UserDetails userDetails = userService.loadUserByUsername(user.getUsername());
+        if (!passwordEncoder.matches(user.getPassword(), userDetails.getPassword())) {
+            return ResponseEntity.badRequest().body("Invalid password");
+        }
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        Instant now = Instant.now();
+        long expiry = 3600L;
+        String scope = "read write";
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("self")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(expiry))
+                .subject(userDetails.getUsername())
+                .claim("scope", scope)
+                .build();
 
-        // Create an OAuth2Authentication object from the Authentication object
-        OAuth2Authentication oAuth2Authentication = new OAuth2Authentication(null, authentication);
-
-        // Generate a JWT token using the OAuth2Authentication object
-        OAuth2AccessToken accessToken = tokenServices.createAccessToken(oAuth2Authentication);
-
-        String token = accessToken.getValue();
+        JwtEncoderParameters parameters = JwtEncoderParameters.from(JwsHeader.with(() -> "HS256").build(), claims);
+        String token = jwtEncoder.encode(parameters).getTokenValue();
 
         return ResponseEntity.ok(token);
     }
