@@ -1,7 +1,7 @@
-package com.shep.Services;
+package com.shep.services;
 
-import com.shep.Repositories.RecordRepository;
-import com.shep.Entities.Record;
+import com.shep.repositories.RecordRepository;
+import com.shep.entities.Record;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

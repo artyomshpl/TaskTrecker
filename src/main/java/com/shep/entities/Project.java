@@ -1,5 +1,4 @@
-package com.shep.Entities;
-
+package com.shep.entities;
 
 import lombok.Getter;
 import lombok.Setter;

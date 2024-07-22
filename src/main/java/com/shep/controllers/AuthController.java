@@ -1,7 +1,7 @@
-package com.shep.Controllers;
+package com.shep.controllers;
 
-import com.shep.Entities.User;
-import com.shep.Services.UserService;
+import com.shep.entities.User;
+import com.shep.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;

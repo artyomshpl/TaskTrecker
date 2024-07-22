@@ -1,7 +1,7 @@
-package com.shep.Services;
+package com.shep.services;
 
-import com.shep.Entities.User;
-import com.shep.Repositories.UserRepository;
+import com.shep.entities.User;
+import com.shep.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

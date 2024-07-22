@@ -1,7 +1,7 @@
-package com.shep.Controllers;
+package com.shep.controllers;
 
-import com.shep.Entities.Project;
-import com.shep.Services.ProjectService;
+import com.shep.entities.Project;
+import com.shep.services.ProjectService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

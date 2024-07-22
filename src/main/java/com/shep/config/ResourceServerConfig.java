@@ -1,4 +1,4 @@
-package com.shep.Config;
+package com.shep.config;
 
 
 import org.springframework.context.annotation.Bean;

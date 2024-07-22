@@ -1,11 +1,11 @@
-package com.shep.Controllers;
+package com.shep.controllers;
 
-import com.shep.Services.RecordService;
+import com.shep.services.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import com.shep.Entities.Record;
+import com.shep.entities.Record;
 import java.util.List;
 
 @RestController

@@ -1,7 +1,7 @@
-package com.shep.Repositories;
+package com.shep.repositories;
 
 
-import com.shep.Entities.User;
+import com.shep.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

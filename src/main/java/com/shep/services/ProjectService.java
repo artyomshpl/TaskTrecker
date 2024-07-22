@@ -1,7 +1,7 @@
-package com.shep.Services;
+package com.shep.services;
 
-import com.shep.Entities.Project;
-import com.shep.Repositories.ProjectRepository;
+import com.shep.entities.Project;
+import com.shep.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
