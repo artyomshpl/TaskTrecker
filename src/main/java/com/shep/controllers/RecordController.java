@@ -22,19 +22,19 @@ public class RecordController {
     }
 
     @GetMapping("/getRecords")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Record>> getRecords() {
         return ResponseEntity.ok(recordService.getRecords());
     }
 
     @GetMapping("/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Record> getRecord(@PathVariable Long id) {
         return ResponseEntity.ok(recordService.getRecord(id));
     }
 
     @PutMapping("/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Record> updateRecord(@PathVariable Long id, @RequestBody Record record) {
         Record existingRecord = recordService.getRecord(id);
         existingRecord.setUser(record.getUser());
@@ -45,7 +45,7 @@ public class RecordController {
     }
 
     @DeleteMapping("/{id}")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteRecord(@PathVariable Long id) {
         recordService.deleteRecord(id);
         return ResponseEntity.noContent().build();

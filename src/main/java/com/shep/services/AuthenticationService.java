@@ -6,12 +6,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.shep.dto.SignInRequest;
 import com.shep.entities.User;
-
 import java.util.Collections;
 
 @Service
@@ -29,16 +27,8 @@ public class AuthenticationService {
      * @return токен
      */
     public JwtAuthenticationResponse signUp(SignUpRequest request) {
-
-        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), Collections.singleton(new SimpleGrantedAuthority("ROLE_" + request.getRole())));
-//        User.builder()
-//                .username(request.getUsername())
-//                .password(passwordEncoder.encode(request.getPassword()))
-//                .roles(request.getRole())
-//                .build();
-
+        User user = new User(request.getUsername(), passwordEncoder.encode(request.getPassword()), request.getRole());
         userService.save(user);
-
         var jwt = jwtService.generateToken(user);
         return new JwtAuthenticationResponse(jwt);
     }

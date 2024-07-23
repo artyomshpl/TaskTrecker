@@ -2,7 +2,6 @@ package com.shep.config;
 
 import com.shep.security.JwtAuthenticationFilter;
 import com.shep.services.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

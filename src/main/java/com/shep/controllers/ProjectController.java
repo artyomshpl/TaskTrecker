@@ -28,7 +28,7 @@ public class ProjectController {
     }
 
     @PostMapping("/createProject")
-//    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Project> createProject(@RequestBody Project project, HttpServletRequest request) {
         String authorizationHeader = request.getHeader("Authorization");
         System.out.println("Authorization header: " + authorizationHeader);
